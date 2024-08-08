@@ -14,11 +14,11 @@ exports.view = catchAsync(async (req, res) => {
     const features = new ApiFeatures(Category.find({parent: null}), req.query).paginate();
 
     const result = await features.query.populate({
-        path: 'children',
+        path: 'subcategories',
         populate: {
-            path: 'children',
+            path: 'subcategories',
             populate: {
-                path: 'children',
+                path: 'subcategories',
             },
         },
     });

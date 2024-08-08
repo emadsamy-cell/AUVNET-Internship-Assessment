@@ -19,7 +19,7 @@ const categorySchema = new mongoose.Schema({
   toObject: { virtuals: true },
 });
 
-categorySchema.virtual('children', {
+categorySchema.virtual('subcategories', {
   ref: 'Category',
   localField: '_id',
   foreignField: 'parent',
