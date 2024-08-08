@@ -1,4 +1,3 @@
-// src/models/Product.js
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -15,8 +14,7 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Please provide a product price'],
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    type: String,
     required: [true, 'Please provide a category'],
   },
   user: {

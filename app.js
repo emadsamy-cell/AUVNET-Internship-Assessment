@@ -11,7 +11,11 @@ dotenv.config({ path: './config/.env' });
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
 const wishlistRoutes = require('./routes/wishlistRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const userRoutes = require('./routes/userRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 const app = express();
 app.use(cors());
@@ -31,7 +35,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/product', productRoutes);
 app.use('/api/wishlist', wishlistRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/category', categoryRoutes);
 app.use((req, res, next) => {
   return next(
     new AppError(`Can't find this ${req.originalUrl} On this server!`, 404),

@@ -29,9 +29,9 @@ exports.add = catchAsync(async (req, res) => {
 });
 
 exports.remove = catchAsync(async (req, res) => {
-    const { wishlistID } = req.params.id;
+    const wishlistID = req.params.id;
 
-    const deletedItem = await Wishlist.findByIdAndDelete({ wishlistID });
+    await Wishlist.findByIdAndDelete(wishlistID);
 
-    sendResult(res, deletedItem, 204);
+    sendResult(res, {}, 200);
 });

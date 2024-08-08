@@ -44,6 +44,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
       return next(new AppError('Please provide username, email, and password', 400));
     }
 
+    // Check password and passwordConfirm
+    if (password !== passwordConfirm) {
+        return next(new AppError('Passwords must be the same!', 400));
+    }
+
     // Create a new user
     const user = await User.create({
       username,
@@ -67,7 +72,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     }
     if (!token)
         return next(
-        new AppError("You're not logged in! Please log in to get access ", 401),
+            new AppError("You're not logged in! Please log in to get access ", 401),
         );
 
     //2)verification token
