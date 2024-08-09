@@ -20,11 +20,13 @@ exports.view = catchAsync(async (req, res) => {
 exports.add = catchAsync(async (req, res) => {
     const { name, description, price, category } = req.body;
     const user = req.user.id;
+    const image = req.file.path;
 
     const product = await Product.create({
         name,
         description,
         price,
+        image,
         category,
         user
     });
@@ -45,12 +47,18 @@ exports.owner = catchAsync(async (req, res, next) => {
 
 exports.update = catchAsync(async (req, res) => {
     const { name, price, description, category } = req.body;
+    const image = req.file ? req.file.path : undefined; // If a new image is uploaded, update it
+  
+    const product = await Product.findById(req.params.id);
 
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      { name, price, description, category },
-      { new: true, runValidators: true }
-    );
+     // Update the product fields
+    product.name = name || product.name;
+    product.price = price || product.price;
+    product.description = description || product.description;
+    product.category = category || product.category;
+    if (image) product.image = image;
+
+    await product.save();
 
     sendResult(res, product, 200);
 });
