@@ -13,7 +13,13 @@ const sendResult = (res, data, statusCode) => {
 
 exports.view = catchAsync(async (req, res) => {
     const features = new ApiFeatures(Product.find(), req.query).paginate();
-    const result = await features.query.select('-_v');
+
+    const result = await features.query
+                    .populate({
+                        path: "category",
+                        select: "name"
+                    })
+                    .select('-_v');
     sendResult(res, result, 200);
 });
 
